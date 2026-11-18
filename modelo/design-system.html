@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Design system</title>
+<style>
+/* 1. TOKENS: troque pelos valores da referência */
+:root{
+  --fundo:#f6f6f7; --painel:#ffffff; --borda:rgba(0,0,0,.10); --texto:#1d1d1f; --suave:#6e6e73;
+  --destaque:#0a7aff; --perigo:#d93025; --aviso:#b8730a; --sucesso:#248a3d;
+  --fonte:system-ui,-apple-system,"Segoe UI",sans-serif; --mono:ui-monospace,Consolas,monospace;
+  --t-1:13px; --t-2:15px; --t-3:20px; --t-4:32px; --t-5:48px;
+  --e-1:4px; --e-2:8px; --e-3:16px; --e-4:24px; --e-5:48px;
+  --r-1:6px; --r-2:10px; --r-3:16px; --r-pilula:999px;
+  --sombra:0 10px 30px rgba(0,0,0,.12);
+  --rapido:150ms; --medio:300ms; --curva:cubic-bezier(.2,.8,.2,1);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --fundo:#1b1b1b; --painel:#242424; --borda:rgba(255,255,255,.10); --texto:#f5f5f7; --suave:#a1a1a6;
+  --destaque:#0a84ff; --sombra:0 10px 30px rgba(0,0,0,.45);
+}}
+:root[data-theme="dark"]{
+  --fundo:#1b1b1b; --painel:#242424; --borda:rgba(255,255,255,.10); --texto:#f5f5f7; --suave:#a1a1a6;
+  --destaque:#0a84ff; --sombra:0 10px 30px rgba(0,0,0,.45);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--fundo);color:var(--texto);font:400 var(--t-2)/1.5 var(--fonte)}
+main{max-width:1000px;margin:0 auto;padding:var(--e-5) var(--e-3)}
+section{margin-bottom:var(--e-5)}
+h1{font-size:var(--t-5);line-height:1.1;margin:0 0 var(--e-2)}
+h2{font-size:var(--t-3);margin:0 0 var(--e-3)}
+.suave{color:var(--suave)}
+.grade{display:grid;gap:var(--e-3);grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
+.demo{background:var(--painel);border:1px solid var(--borda);border-radius:var(--r-3);padding:var(--e-4)}
+pre{margin:var(--e-3) 0 0;padding:var(--e-3);border-radius:var(--r-2);background:rgba(127,127,127,.12);overflow:auto;font:var(--t-1)/1.5 var(--mono)}
+.amostra{height:56px;border-radius:var(--r-2);border:1px solid var(--borda)}
+
+/* 2. COMPONENTES */
+.botao{display:inline-flex;align-items:center;gap:var(--e-2);padding:10px 18px;border-radius:var(--r-pilula);border:1px solid var(--borda);
+  background:var(--painel);color:var(--texto);font:600 var(--t-2) var(--fonte);cursor:pointer;transition:transform var(--rapido) var(--curva),background var(--rapido)}
+.botao:hover{transform:translateY(-1px)}
+.botao:focus-visible{outline:2px solid var(--destaque);outline-offset:2px}
+.botao.primario{background:var(--destaque);border-color:transparent;color:#fff}
+.botao:disabled{opacity:.45;cursor:default;transform:none}
+.chip{display:inline-block;padding:3px 10px;border-radius:var(--r-pilula);font-size:var(--t-1);background:rgba(127,127,127,.14)}
+.cartao{background:var(--painel);border:1px solid var(--borda);border-radius:var(--r-3);padding:var(--e-4);
+  transition:transform var(--medio) var(--curva),box-shadow var(--medio)}
+.cartao:hover{transform:translateY(-3px);box-shadow:var(--sombra)}
+
+/* 3. FUNDOS E EFEITOS */
+.pontos{background-image:radial-gradient(rgba(127,127,127,.35) 1px,transparent 1px);background-size:22px 22px}
+.vidro{background:color-mix(in srgb,var(--painel) 70%,transparent);backdrop-filter:blur(14px);border:1px solid var(--borda)}
+
+/* 4. ANIMAÇÕES */
+.surge{opacity:0;transform:translateY(16px);transition:opacity var(--medio) var(--curva),transform var(--medio) var(--curva)}
+.surge.visivel{opacity:1;transform:none}
+.sem-js .surge{opacity:1;transform:none}
+@keyframes flutua{50%{transform:translateY(-6px)}}
+.flutua{animation:flutua 3s var(--curva) infinite}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.surge{opacity:1;transform:none}}
+</style>
+</head>
+<body class="sem-js">
+<main>
+  <header><h1>Design system</h1><p class="suave">Troque cada valor pelo da referência. Tudo aqui funciona: é o que a IA copia.</p></header>
+
+  <section><h2>Cores</h2>
+    <div class="grade">
+      <div class="demo"><div class="amostra" style="background:var(--fundo)"></div><p>--fundo</p></div>
+      <div class="demo"><div class="amostra" style="background:var(--painel)"></div><p>--painel</p></div>
+      <div class="demo"><div class="amostra" style="background:var(--destaque)"></div><p>--destaque</p></div>
+      <div class="demo"><div class="amostra" style="background:var(--texto)"></div><p>--texto</p></div>
+    </div>
+  </section>
+
+  <section><h2>Tipografia</h2>
+    <div class="demo"><p style="font-size:var(--t-5);margin:0;line-height:1.1">Título</p><p style="font-size:var(--t-3)">Subtítulo</p><p>Texto corrido.</p><p class="suave">Texto suave.</p></div>
+  </section>
+
+  <section><h2>Botões e chips</h2>
+    <div class="demo">
+      <button class="botao primario">Primário</button> <button class="botao">Secundário</button> <button class="botao" disabled>Desabilitado</button>
+      <span class="chip">chip</span>
+      <pre>&lt;button class="botao primario"&gt;Primário&lt;/button&gt;</pre>
+    </div>
+  </section>
+
+  <section><h2>Cartões e hover</h2>
+    <div class="grade">
+      <article class="cartao surge"><h3>Um</h3><p class="suave">Passe o mouse.</p></article>
+      <article class="cartao surge"><h3>Dois</h3><p class="suave">Surge com a rolagem.</p></article>
+      <article class="cartao surge"><h3>Três</h3><p class="suave">Mesmo movimento.</p></article>
+    </div>
+    <pre>&lt;article class="cartao surge"&gt;…&lt;/article&gt;</pre>
+  </section>
+
+  <section><h2>Fundos e efeitos</h2>
+    <div class="demo pontos" style="height:160px;position:relative">
+      <div class="vidro flutua" style="position:absolute;inset:40px 25%;border-radius:var(--r-3);display:grid;place-items:center">vidro sobre pontos</div>
+    </div>
+  </section>
+</main>
+<script>
+// surgir com a rolagem; sem JS (ou com movimento reduzido) tudo aparece
+document.body.classList.remove('sem-js');
+const visivel = new IntersectionObserver((itens) => itens.forEach((item) => {
+  if (item.isIntersecting) { item.target.classList.add('visivel'); visivel.unobserve(item.target); }
+}), { threshold: 0.15 });
+document.querySelectorAll('.surge').forEach((elemento) => visivel.observe(elemento));
+</script>
+</body>
+</html>
