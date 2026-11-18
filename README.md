@@ -44,7 +44,13 @@ move.
 Copie [`skill/design-system-html`](skill/design-system-html) para `~/.claude/skills/` (ou para `.claude/skills/` do
 projeto). Depois é só pedir "faz o site usando o processo do design system em HTML".
 
-## Exemplo
+## Exemplos
 
-[`exemplos/magoagent/`](exemplos/magoagent) traz o design system do site do MagoAgent, extraído do próprio app. Abra o
-`design-system.html` no navegador.
+Cada exemplo tem a sua pasta com o `design-system.html` (abra no navegador) e o `estilo.css` compartilhado; os que têm
+página pronta trazem também o `index.html`, feito só com esse CSS, e a referência em `referencias/README.md`.
+
+- [`exemplos/magoagent/`](exemplos/magoagent): o design system do site do MagoAgent, extraído do próprio app.
+- [`exemplos/vitrine-tenis/`](exemplos/vitrine-tenis): uma loja de tênis numa parede com prateleiras que acendem e uma
+  câmera que aproxima o par escolhido, a partir da LAST DEPT. da Ascenta Studio.
+Os arquivos usam caminhos relativos e fontes do Google Fonts. Abrir direto do disco funciona; um servidor local
+(`python -m http.server` dentro de `exemplos/`) evita bloqueios do navegador.

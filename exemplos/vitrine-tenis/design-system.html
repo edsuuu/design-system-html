@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Design system · Vitrine de tênis</title>
+<meta name="description" content="O design system da vitrine de tênis: tokens, nicho com luz, os tênis em SVG, a câmera e os componentes da loja, cada um com o trecho para reutilizar.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400..800&family=Geist:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<main class="ds">
+  <header class="ds-topo">
+    <div>
+      <p class="rotulo">Exemplo · vitrine-tenis</p>
+      <h1 class="titulo">Design system da vitrine</h1>
+      <p class="texto-suave">Tirado da loja conceito LAST DEPT. (ascentastudio.com/last-dept): cores, fontes, painel sem cartão e pílula. A luz das prateleiras, os tênis em SVG, a câmera em CSS e o tema claro foram desenhados aqui. A loja pronta está em <a class="nav-link" href="index.html">index.html</a>.</p>
+    </div>
+    <div class="ds-tema" role="group" aria-label="Tema">
+      <button class="botao-texto" type="button" data-tema="">Sistema</button>
+      <button class="botao-texto" type="button" data-tema="light">Claro</button>
+      <button class="botao-texto" type="button" data-tema="dark">Escuro</button>
+    </div>
+  </header>
+
+  <nav class="ds-indice" aria-label="Seções">
+    <a class="nav-link" href="#cores">Cores</a><a class="nav-link" href="#tipografia">Tipografia</a><a class="nav-link" href="#espaco">Espaço e movimento</a>
+    <a class="nav-link" href="#parede">Parede</a><a class="nav-link" href="#nicho">Nicho e luz</a><a class="nav-link" href="#tenis">Os tênis</a>
+    <a class="nav-link" href="#botoes">Botões</a><a class="nav-link" href="#campos">Seletor e dados</a><a class="nav-link" href="#painel">Painel</a>
+    <a class="nav-link" href="#aviso">Aviso</a><a class="nav-link" href="#camera">Câmera</a>
+  </nav>
+
+  <section id="cores" class="secao">
+    <h2>Cores</h2>
+    <p>O escuro é o da referência (<code>--paper #eeeae1</code>, <code>--ink #242321</code>, <code>--muted #b6afa5</code>, <code>--accent #efa767</code>, <code>--line #eeeae12b</code>). O claro é uma galeria de parede caiada, inventada aqui.</p>
+    <div class="amostras">
+      <div class="amostra"><i style="--c:var(--fundo)"></i><span>fundo (ink)<br><code>--fundo</code></span></div>
+      <div class="amostra"><i style="--c:var(--parede)"></i><span>parede<br><code>--parede</code></span></div>
+      <div class="amostra"><i style="--c:var(--parede-luz)"></i><span>luz no alto da parede<br><code>--parede-luz</code></span></div>
+      <div class="amostra"><i style="--c:var(--texto)"></i><span>texto (paper)<br><code>--texto</code></span></div>
+      <div class="amostra"><i style="--c:var(--suave)"></i><span>texto suave (muted)<br><code>--suave</code></span></div>
+      <div class="amostra"><i style="--c:var(--linha)"></i><span>linha fina (line)<br><code>--linha</code></span></div>
+      <div class="amostra"><i style="--c:var(--destaque)"></i><span>destaque (accent)<br><code>--destaque</code></span></div>
+      <div class="amostra"><i style="--c:var(--rotulo)"></i><span>etiqueta holográfica<br><code>--rotulo</code></span></div>
+      <div class="amostra"><i style="--c:var(--pilula)"></i><span>pílula<br><code>--pilula</code></span></div>
+      <div class="amostra"><i style="--c:var(--led)"></i><span>LED<br><code>--led</code></span></div>
+      <div class="amostra"><i style="--c:var(--led-quente)"></i><span>halo do LED<br><code>--led-quente</code></span></div>
+    </div>
+  </section>
+
+  <section id="tipografia" class="secao">
+    <h2>Tipografia</h2>
+    <p>Archivo para marca, títulos e preço, sempre com letras apertadas; Geist para todo o resto, pequeno (10 a 15 px), como na referência.</p>
+    <div class="escala">
+      <div><code>.marca</code><span class="marca">ACERVO.</span></div>
+      <div><code>.titulo</code><span class="titulo">Dez pares, uma parede.</span></div>
+      <div><code>.nome-produto</code><span class="nome-produto">Viaduto 03</span></div>
+      <div><code>.preco</code><span class="preco">R$ 999</span></div>
+      <div><code>texto 13 px</code><span>Couro acolchoado azul-cobalto sobre a maior câmara de ar da série.</span></div>
+      <div><code>.rotulo</code><span class="rotulo">Tênis · Série 01 · Inverno</span></div>
+      <div><code>.etiqueta</code><span class="etiqueta">Viaduto 03<span>03 / Série 01</span></span></div>
+    </div>
+    <div class="ds-codigo"><pre>&lt;span class="marca"&gt;ACERVO.&lt;/span&gt;
+&lt;h1 class="titulo"&gt;Dez pares, uma parede.&lt;/h1&gt;
+&lt;p class="rotulo"&gt;Tênis · Série 01&lt;/p&gt;</pre><button class="copiar" type="button">Copiar</button></div>
+  </section>
+
+  <section id="espaco" class="secao">
+    <h2>Espaço, raios e movimento</h2>
+    <p>Uma curva só (<code>--curva</code>, que acelera e freia forte) para tudo que anda: a câmera leva 1,1 s, o painel 0,8 s, a luz 0,5 s.</p>
+    <div class="ds-grade">
+      <div class="ds-item">
+        <h3>Espaços</h3>
+        <div class="ds-demo coluna">
+          <div class="regua"><i style="width:var(--e-1)"></i>--e-1 · 4</div><div class="regua"><i style="width:var(--e-2)"></i>--e-2 · 8</div>
+          <div class="regua"><i style="width:var(--e-3)"></i>--e-3 · 12</div><div class="regua"><i style="width:var(--e-4)"></i>--e-4 · 20</div>
+          <div class="regua"><i style="width:var(--e-5)"></i>--e-5 · 28</div><div class="regua"><i style="width:var(--e-6)"></i>--e-6 · 48</div>
+        </div>
+      </div>
+      <div class="ds-item">
+        <h3>Entrada da abertura (<code>entra</code>)</h3>
+        <div class="ds-demo"><div id="demo-entra"><p class="rotulo">Tênis · Série 01</p><p class="titulo">Uma parede.</p></div></div>
+        <button class="botao-texto" type="button" id="repetir-entra">Repetir ↻</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="parede" class="secao">
+    <h2>Parede</h2>
+    <p>Luz de cima, vinheta nas bordas e um reboco de ruído em SVG. O reboco fica na parede (que se move com a câmera); a luz fica no palco (que não se move).</p>
+    <div class="palco ds-camera"><div class="parede reboco" style="width:100%;height:100%"></div></div>
+    <div class="ds-codigo"><pre>&lt;main class="palco"&gt;
+  &lt;div class="parede reboco"&gt;…nichos…&lt;/div&gt;
+&lt;/main&gt;</pre><button class="copiar" type="button">Copiar</button></div>
+  </section>
+
+  <section id="nicho" class="secao">
+    <h2>Nicho e luz</h2>
+    <p>Passe o mouse ou use Tab: o tênis clareia e sobe, o LED pisca duas vezes como lâmpada fluorescente, o facho e o reflexo acendem e a etiqueta aparece. A classe <code>.aceso</code> fixa a luz no escolhido.</p>
+    <div class="ds-grade">
+      <div class="ds-item"><h3>Normal (passe o mouse)</h3><div class="palco ds-demo"><div class="ds-nicho" id="nicho-normal"></div></div></div>
+      <div class="ds-item"><h3><code>.aceso</code></h3><div class="palco ds-demo"><div class="ds-nicho" id="nicho-aceso"></div></div></div>
+    </div>
+    <div class="ds-codigo"><pre>&lt;button class="nicho" aria-label="Viaduto 03, R$ 999. Ver de perto"&gt;
+  &lt;span class="facho"&gt;&lt;/span&gt;&lt;span class="reflexo"&gt;&lt;/span&gt;
+  &lt;span class="prateleira"&gt;&lt;span class="led"&gt;&lt;/span&gt;&lt;/span&gt;
+  &lt;span class="tenis"&gt;&lt;svg&gt;…&lt;/svg&gt;&lt;/span&gt;
+  &lt;span class="etiqueta"&gt;Viaduto 03&lt;span&gt;03 / Série 01&lt;/span&gt;&lt;/span&gt;
+&lt;/button&gt;
+&lt;!-- ou, pelo tenis.js: --&gt;
+parede.appendChild(Tenis.nicho(2));</pre><button class="copiar" type="button">Copiar</button></div>
+  </section>
+
+  <section id="tenis" class="secao">
+    <h2>Os tênis</h2>
+    <p>No lugar das fotos da referência, cada par é desenhado em SVG por <code>Tenis.desenhar(modelo, indice)</code>, combinando cano (baixo, médio, alto), solado (plano, crua, grosso, ar, ondas), detalhe (faixa, traseira, painel, calcanhar, janela) e sete cores.</p>
+    <div class="ds-tenis" id="todos-tenis"></div>
+    <div class="ds-codigo"><pre>{ nome: 'Viaduto 03', preco: 999, cano: 'baixo', solado: 'ar', detalhe: 'janela', cadarco: true,
+  cores: { cabedal: '#2659e8', sobreposicao: '#1c40b0', detalhe: '#dfe7ff', entressola: '#cfe0ff',
+           entressola2: '#9fc0ff', sola: '#eef2fb', cadarco: '#eef3ff' } }</pre><button class="copiar" type="button">Copiar</button></div>
+  </section>
+
+  <section id="botoes" class="secao">
+    <h2>Botões</h2>
+    <p>A pílula clara com o círculo da seta é o único botão cheio da loja (igual ao "Add to bag" da referência: 100 px de raio, 7/9/7/20 de respiro). O resto é texto.</p>
+    <div class="ds-grade">
+      <div class="ds-item"><h3>Pílula</h3><div class="ds-demo coluna">
+        <button class="pilula" type="button"><span>Adicionar à sacola<small>BR 41 · R$ 999</small></span><span class="pilula-icone" aria-hidden="true">→</span></button>
+        <button class="pilula" type="button" disabled><span>Adicionar à sacola<small>Escolha o tamanho para continuar</small></span><span class="pilula-icone" aria-hidden="true">→</span></button>
+      </div></div>
+      <div class="ds-item"><h3>Texto e navegação</h3><div class="ds-demo">
+        <button class="botao-texto" type="button">← Coleção</button>
+        <button class="botao-texto" type="button" disabled>Anterior</button>
+        <button class="nav-link" type="button" aria-current="true">Coleção<span class="contagem">10</span></button>
+        <button class="nav-link" type="button" id="demo-sacola">Sacola (00)</button>
+      </div></div>
+    </div>
+    <div class="ds-codigo"><pre>&lt;button class="pilula"&gt;
+  &lt;span&gt;Adicionar à sacola&lt;small&gt;BR 41 · R$ 999&lt;/small&gt;&lt;/span&gt;
+  &lt;span class="pilula-icone" aria-hidden="true"&gt;→&lt;/span&gt;
+&lt;/button&gt;
+&lt;button class="botao-texto"&gt;← Coleção&lt;/button&gt;
+&lt;button class="nav-link" aria-current="true"&gt;Coleção&lt;span class="contagem"&gt;10&lt;/span&gt;&lt;/button&gt;</pre><button class="copiar" type="button">Copiar</button></div>
+  </section>
+
+  <section id="campos" class="secao">
+    <h2>Seletor e linhas de dado</h2>
+    <p>Nada de caixas: o tamanho é o select nativo com uma linha embaixo, e os dados são linhas finas com rótulo à esquerda e valor à direita.</p>
+    <div class="ds-grade">
+      <div class="ds-item"><div class="ds-demo coluna">
+        <label class="seletor"><span class="oculto">Tamanho</span><select id="demo-tamanho"><option value="">Escolha o tamanho (BR)</option><option>BR 40</option><option>BR 41</option><option disabled>BR 42 · esgotado</option></select></label>
+      </div></div>
+      <div class="ds-item"><div class="ds-demo coluna">
+        <dl class="linhas"><div class="linha-dado"><dt>Peso (tam. 41)</dt><dd>356 g</dd></div><div class="linha-dado"><dt>Drop</dt><dd>12 mm</dd></div><div class="linha-dado"><dt>Solado</dt><dd>Ar visível</dd></div></dl>
+      </div></div>
+    </div>
+    <div class="ds-codigo"><pre>&lt;label class="seletor"&gt;&lt;span class="oculto"&gt;Tamanho&lt;/span&gt;&lt;select&gt;…&lt;/select&gt;&lt;/label&gt;
+&lt;dl class="linhas"&gt;&lt;div class="linha-dado"&gt;&lt;dt&gt;Drop&lt;/dt&gt;&lt;dd&gt;12 mm&lt;/dd&gt;&lt;/div&gt;&lt;/dl&gt;</pre><button class="copiar" type="button">Copiar</button></div>
+  </section>
+
+  <section id="painel" class="secao">
+    <h2>Painel do produto</h2>
+    <p>O painel junta os componentes acima sem moldura própria: na loja ele fica numa coluna à direita sobre a parede (no celular, uma folha que sobe de baixo).</p>
+    <div class="ds-demo">
+      <div class="ds-painel">
+        <div class="painel-topo"><div><p class="rotulo">03 / 10 · Série 01</p><h3 class="nome-produto">Viaduto 03</h3></div><span class="preco">R$ 999</span></div>
+        <p class="texto-suave">Couro acolchoado azul-cobalto sobre a maior câmara de ar da série.</p>
+        <dl class="linhas"><div class="linha-dado"><dt>Peso (tam. 41)</dt><dd>356 g</dd></div><div class="linha-dado"><dt>Solado</dt><dd>Ar visível</dd></div></dl>
+        <button class="pilula" type="button" disabled><span>Adicionar à sacola<small>Escolha o tamanho para continuar</small></span><span class="pilula-icone" aria-hidden="true">→</span></button>
+        <div class="painel-nav"><button class="botao-texto" type="button">← Coleção</button><span><button class="botao-texto" type="button">Anterior</button> · <button class="botao-texto" type="button">Próximo</button></span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="aviso" class="secao">
+    <h2>Aviso</h2>
+    <p>Pílula cheia que sobe do pé da tela por 2,4 s, e o contador da sacola dá um pulo (<code>.pulo</code>).</p>
+    <div class="ds-demo"><div class="aviso ds-aviso">Viaduto 03 · BR 41 na sacola</div><button class="pilula" type="button" id="demo-avisar" style="width:auto"><span>Mostrar aviso</span><span class="pilula-icone" aria-hidden="true">→</span></button></div>
+  </section>
+
+  <section id="camera" class="secao">
+    <h2>A câmera</h2>
+    <p>A referência troca vídeos de aproximação; aqui é uma conta só. Para mostrar o nicho de centro (cx, cy) no ponto (alvoX, alvoY) da tela com escala s: <code>translate(alvoX − cx·s, alvoY − cy·s) scale(s)</code>, com <code>transform-origin: 0 0</code>.</p>
+    <div class="ds-controles" role="group" aria-label="Câmera">
+      <button class="botao-texto" type="button" data-alvo="-1" aria-pressed="true">Parede</button>
+      <button class="botao-texto" type="button" data-alvo="0" aria-pressed="false">01</button>
+      <button class="botao-texto" type="button" data-alvo="1" aria-pressed="false">02</button>
+      <button class="botao-texto" type="button" data-alvo="2" aria-pressed="false">03</button>
+    </div>
+    <div class="palco ds-camera" id="camera-palco"><div class="parede reboco" id="camera-parede"></div></div>
+    <div class="ds-codigo"><pre>function camera(parede, palco, centroX, centroY, escala) {
+  const { width, height } = palco.getBoundingClientRect();
+  parede.style.transform = `translate(${width / 2 - centroX * escala}px, ${height / 2 - centroY * escala}px) scale(${escala})`;
+}</pre><button class="copiar" type="button">Copiar</button></div>
+  </section>
+</main>
+<div class="aviso" id="aviso" role="status" aria-live="polite"></div>
+
+<script src="tenis.js"></script>
+<script>
+(function () {
+  const { MODELOS, desenhar, nicho } = window.Tenis;
+
+  // tema: Sistema, Claro ou Escuro
+  document.querySelectorAll('[data-tema]').forEach((botao) => botao.addEventListener('click', () => {
+    if (botao.dataset.tema) document.documentElement.dataset.theme = botao.dataset.tema;
+    else delete document.documentElement.dataset.theme;
+  }));
+
+  // Copiar: copia o texto do <pre> ao lado
+  document.querySelectorAll('.copiar').forEach((botao) => botao.addEventListener('click', () => {
+    const texto = botao.previousElementSibling.textContent;
+    navigator.clipboard.writeText(texto).then(() => { botao.textContent = 'Copiado'; }, () => { botao.textContent = 'Selecione e copie'; });
+    setTimeout(() => { botao.textContent = 'Copiar'; }, 1800);
+  }));
+
+  // nichos de amostra
+  document.getElementById('nicho-normal').appendChild(nicho(2));
+  const aceso = nicho(5);
+  aceso.classList.add('aceso');
+  document.getElementById('nicho-aceso').appendChild(aceso);
+
+  // todos os tênis
+  document.getElementById('todos-tenis').innerHTML = MODELOS.map((modelo, indice) =>
+    `<figure><div class="tenis">${desenhar(modelo, 100 + indice)}</div><figcaption>${modelo.nome} · ${modelo.cano} · ${modelo.solado} · ${modelo.detalhe}</figcaption></figure>`).join('');
+
+  // entrada
+  document.getElementById('repetir-entra').addEventListener('click', () => {
+    const bloco = document.getElementById('demo-entra');
+    bloco.style.animation = 'none';
+    void bloco.offsetWidth;
+    bloco.style.animation = 'entra .9s var(--curva) both';
+    setTimeout(() => { bloco.style.animation = ''; }, 1000);
+  });
+
+  // aviso e pulo da sacola
+  const aviso = document.getElementById('aviso');
+  const sacola = document.getElementById('demo-sacola');
+  let conta = 0;
+  document.getElementById('demo-avisar').addEventListener('click', () => {
+    conta += 1;
+    sacola.textContent = `Sacola (${String(conta).padStart(2, '0')})`;
+    sacola.classList.remove('pulo');
+    void sacola.offsetWidth;
+    sacola.classList.add('pulo');
+    aviso.textContent = 'Viaduto 03 · BR 41 na sacola';
+    aviso.classList.add('mostra');
+    setTimeout(() => aviso.classList.remove('mostra'), 2400);
+  });
+
+  // câmera em miniatura: três nichos numa parede de 960x430
+  const palco = document.getElementById('camera-palco');
+  const parede = document.getElementById('camera-parede');
+  const nichos = [0, 1, 2].map((indice) => {
+    const botao = nicho(indice);
+    Object.assign(botao.style, { left: indice * 320 + 'px', top: '0px', width: '320px', height: '430px' });
+    botao.addEventListener('click', () => mirar(indice));
+    parede.appendChild(botao);
+    return botao;
+  });
+  Object.assign(parede.style, { width: '960px', height: '430px' });
+  function mirar(alvo) {
+    const { width, height } = palco.getBoundingClientRect();
+    const escala = alvo < 0 ? Math.min(width / 960, height / 430) : Math.min(width / 380, height / 390);
+    const centroX = alvo < 0 ? 480 : alvo * 320 + 160, centroY = alvo < 0 ? 215 : 236;
+    parede.style.transform = `translate(${width / 2 - centroX * escala}px, ${height / 2 - centroY * escala}px) scale(${escala})`;
+    nichos.forEach((botao, indice) => botao.classList.toggle('aceso', indice === alvo));
+    document.querySelectorAll('[data-alvo]').forEach((botao) => botao.setAttribute('aria-pressed', String(Number(botao.dataset.alvo) === alvo)));
+  }
+  document.querySelectorAll('[data-alvo]').forEach((botao) => botao.addEventListener('click', () => mirar(Number(botao.dataset.alvo))));
+  window.addEventListener('resize', () => mirar(Number(document.querySelector('[data-alvo][aria-pressed="true"]').dataset.alvo)));
+  mirar(-1);
+})();
+</script>
+</body>
+</html>

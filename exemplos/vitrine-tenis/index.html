@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Acervo · Tênis, Série 01</title>
+<meta name="description" content="Dez pares numa parede: passe o mouse para acender a prateleira e clique para ver de perto.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400..800&family=Geist:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body class="loja">
+<header class="barra">
+  <button class="marca" id="inicio" type="button" aria-label="Acervo, voltar à parede">
+    <svg viewBox="0 0 26 26" aria-hidden="true"><rect x="1.5" y="1.5" width="23" height="23" rx="6" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M6 16.5h14M8 16.5c0-3 2-5.5 5-6.5l2.5 3.2 4 1.1v2.2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M6 19.5h14" stroke="var(--destaque)" stroke-width="1.6"/></svg>
+    ACERVO.
+  </button>
+  <nav class="nav" aria-label="Loja">
+    <button class="nav-link so-largo" id="colecao" type="button" aria-current="true">Coleção<span class="contagem">10</span></button>
+    <button class="nav-link" id="sacola" type="button">Sacola (<span id="sacola-conta">00</span>)</button>
+  </nav>
+</header>
+
+<div class="abertura">
+  <p class="rotulo">Tênis · Série 01 · Inverno</p>
+  <h1 class="titulo">Dez pares,<br>uma parede.</h1>
+</div>
+
+<main class="palco" id="palco" aria-label="Parede com dez pares de tênis">
+  <div class="parede reboco" id="parede"></div>
+  <noscript><p class="sem-js-aviso">A parede precisa de JavaScript para montar as prateleiras.</p></noscript>
+</main>
+
+<aside class="painel" id="painel" aria-hidden="true" aria-labelledby="p-nome">
+  <div class="painel-topo">
+    <div>
+      <p class="rotulo"><span id="p-numero">01 / 10</span> · Série 01</p>
+      <h2 class="nome-produto" id="p-nome">Brasa 01</h2>
+    </div>
+    <span class="preco" id="p-preco">R$ 899</span>
+  </div>
+  <p class="texto-suave" id="p-descricao"></p>
+  <dl class="linhas">
+    <div class="linha-dado"><dt>Peso (tam. 41)</dt><dd id="p-peso"></dd></div>
+    <div class="linha-dado"><dt>Drop</dt><dd id="p-drop"></dd></div>
+    <div class="linha-dado"><dt>Solado</dt><dd id="p-solado"></dd></div>
+  </dl>
+  <label class="seletor">
+    <span class="oculto">Tamanho</span>
+    <select id="p-tamanho"></select>
+  </label>
+  <button class="pilula" id="p-adicionar" type="button" disabled>
+    <span>Adicionar à sacola<small id="p-dica">Escolha o tamanho para continuar</small></span>
+    <span class="pilula-icone" aria-hidden="true">→</span>
+  </button>
+  <div class="painel-nav">
+    <button class="botao-texto" id="p-voltar" type="button">← Coleção</button>
+    <span>
+      <button class="botao-texto" id="p-anterior" type="button" aria-label="Modelo anterior">Anterior</button>
+      ·
+      <button class="botao-texto" id="p-proximo" type="button" aria-label="Próximo modelo">Próximo</button>
+    </span>
+  </div>
+</aside>
+
+<footer class="rodape">
+  <span class="rotulo">Série 01 · 10 modelos</span>
+  <span class="so-largo">Passe o mouse para acender. Clique para ver de perto. ← → navega, Esc volta.</span>
+  <span class="rotulo"><a class="nav-link" href="design-system.html">Design system ↗</a></span>
+</footer>
+<div class="aviso" id="aviso" role="status" aria-live="polite"></div>
+
+<script src="tenis.js"></script>
+<script src="vitrine.js"></script>
+</body>
+</html>

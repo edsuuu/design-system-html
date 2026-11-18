@@ -1,0 +1,237 @@
+/* O design system da Vitrine (veja design-system.html). Tirado de ascentastudio.com/last-dept: as cores do :root
+   (--paper, --ink, --muted, --accent, --line), a dupla Archivo + Geist com os tamanhos e o espaçamento entre letras,
+   o painel sem cartão com linhas finas e o botão em pílula clara. Desenhado aqui: a luz das prateleiras, os tênis em
+   SVG (tenis.js), a câmera em CSS no lugar dos vídeos da referência e o tema claro.
+   Todas as páginas do exemplo usam só o que está aqui. */
+
+/* ── 1. Tokens ─────────────────────────────────────────────────────────── */
+:root {
+  color-scheme: dark;
+  /* cores: o escuro da referência */
+  --fundo: #242321; --parede: #2e2c29; --parede-luz: #4a453f;
+  --texto: #eeeae1; --suave: #b6afa5; --apagado: #8f887f; --linha: #eeeae12b;
+  --destaque: #efa767; --destaque-texto: #242321; --rotulo: #ffc28e;
+  --pilula: rgba(238, 230, 219, .72); --pilula-cheia: #eee6db; --pilula-texto: #242321;
+  --chip: rgba(238, 234, 225, .06);
+  /* luz e acrílico (desenhados aqui) */
+  --led: #ffb46e; --led-quente: #ff7b33; --led-halo: rgba(255, 123, 51, .45);
+  --acrilico-topo: rgba(255, 255, 255, .42); --acrilico: linear-gradient(180deg, rgba(255, 255, 255, .22), rgba(255, 255, 255, .05));
+  --sombra-chao: rgba(0, 0, 0, .7); --vinheta: rgba(0, 0, 0, .55); --tenis-apagado: .58; --tenis-fora: .38;
+  /* tipografia: Archivo nos títulos, Geist no resto */
+  --display: Archivo, "Arial Narrow", Arial, sans-serif;
+  --fonte: Geist, Arial, sans-serif;
+  --t-0: 10px; --t-1: 11px; --t-2: 13px; --t-3: 15px; --t-4: 29px; --t-5: clamp(30px, 4vw, 54px);
+  --ls-marca: -.055em; --ls-titulo: -.045em; --ls-rotulo: .13em;
+  /* espaço, raios e movimento */
+  --e-1: 4px; --e-2: 8px; --e-3: 12px; --e-4: 20px; --e-5: 28px; --e-6: 48px;
+  --r-1: 6px; --r-2: 10px; --r-pilula: 100px;
+  --rapido: .3s; --medio: .5s; --camera: 1.1s; --curva: cubic-bezier(.7, 0, .2, 1);
+}
+/* tema claro: uma galeria de parede caiada (inventado; a referência só tem o escuro) */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    color-scheme: light;
+    --fundo: #e9e4da; --parede: #ddd6ca; --parede-luz: #f7f3ec;
+    --texto: #242321; --suave: #6b645b; --apagado: #8a8379; --linha: #2423212b;
+    --destaque: #b0601c; --destaque-texto: #fff8f0; --rotulo: #a4541a;
+    --pilula: rgba(36, 35, 33, .86); --pilula-cheia: #242321; --pilula-texto: #eeeae1; --chip: rgba(36, 35, 33, .06);
+    --acrilico-topo: rgba(255, 255, 255, .95); --acrilico: linear-gradient(180deg, rgba(255, 255, 255, .75), rgba(255, 255, 255, .25));
+    --sombra-chao: rgba(70, 50, 30, .3); --vinheta: rgba(70, 50, 30, .16); --tenis-apagado: .84; --tenis-fora: .62;
+    --led-halo: rgba(255, 123, 51, .3);
+  }
+}
+:root[data-theme="light"] {
+  color-scheme: light;
+  --fundo: #e9e4da; --parede: #ddd6ca; --parede-luz: #f7f3ec;
+  --texto: #242321; --suave: #6b645b; --apagado: #8a8379; --linha: #2423212b;
+  --destaque: #b0601c; --destaque-texto: #fff8f0; --rotulo: #a4541a;
+  --pilula: rgba(36, 35, 33, .86); --pilula-cheia: #242321; --pilula-texto: #eeeae1; --chip: rgba(36, 35, 33, .06);
+  --acrilico-topo: rgba(255, 255, 255, .95); --acrilico: linear-gradient(180deg, rgba(255, 255, 255, .75), rgba(255, 255, 255, .25));
+  --sombra-chao: rgba(70, 50, 30, .3); --vinheta: rgba(70, 50, 30, .16); --tenis-apagado: .84; --tenis-fora: .62;
+  --led-halo: rgba(255, 123, 51, .3);
+}
+
+/* ── 2. Base ───────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--fundo); color: var(--texto); font: 400 var(--t-2)/1.5 var(--fonte); -webkit-font-smoothing: antialiased; }
+button, select { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--destaque); outline-offset: 2px; }
+.oculto { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* ── 3. Tipografia ─────────────────────────────────────────────────────── */
+.marca { display: inline-flex; align-items: center; gap: var(--e-2); border: 0; background: none; padding: 0; cursor: pointer; text-decoration: none; color: var(--texto);
+  font: 750 27px/1 var(--display); letter-spacing: var(--ls-marca); }
+.marca svg { width: 26px; height: 26px; flex: none; }
+.titulo { margin: 0; font: 450 var(--t-5)/.98 var(--display); letter-spacing: var(--ls-titulo); text-wrap: balance; }
+.nome-produto { margin: 0; font: 650 var(--t-4)/1 var(--display); letter-spacing: -.04em; text-transform: uppercase; text-wrap: balance; }
+.rotulo { margin: 0; font: 400 var(--t-0)/1.3 var(--fonte); letter-spacing: var(--ls-rotulo); text-transform: uppercase; color: var(--suave); }
+.texto-suave { color: var(--suave); }
+.preco { font: 500 var(--t-4)/1 var(--display); letter-spacing: -.04em; font-variant-numeric: tabular-nums; }
+
+/* ── 4. Componentes ────────────────────────────────────────────────────── */
+/* navegação: Geist 11px, contador em sobrescrito */
+.nav { display: flex; align-items: center; gap: var(--e-4); }
+.nav-link { border: 0; background: none; padding: var(--e-3) 0; cursor: pointer; font-size: var(--t-1); letter-spacing: .015em; color: var(--texto); text-decoration: none; opacity: .82; transition: opacity var(--rapido); }
+.nav-link:hover, .nav-link[aria-current="true"] { opacity: 1; }
+.contagem { margin-left: 3px; font-size: 8px; vertical-align: super; color: var(--suave); font-variant-numeric: tabular-nums; }
+
+/* botão de texto (← Coleção, Sobre esta loja ↗) */
+.botao-texto { border: 0; background: none; padding: var(--e-3) 0; cursor: pointer; font-size: var(--t-1); letter-spacing: .015em; color: var(--suave); transition: color var(--rapido); }
+.botao-texto:hover { color: var(--texto); }
+.botao-texto:disabled { opacity: .4; cursor: default; }
+
+/* pílula: o botão principal (Adicionar à sacola), com o círculo da seta à direita */
+.pilula { display: flex; align-items: center; justify-content: space-between; gap: var(--e-3); width: 100%; border: 0; border-radius: var(--r-pilula);
+  padding: 7px 9px 7px 20px; background: var(--pilula); color: var(--pilula-texto); cursor: pointer; text-align: left;
+  transition: background var(--rapido), transform var(--rapido) var(--curva); }
+.pilula:hover:not(:disabled) { background: var(--pilula-cheia); }
+.pilula:active:not(:disabled) { transform: scale(.985); }
+.pilula:disabled { cursor: default; opacity: .52; }
+.pilula small { display: block; font-size: var(--t-0); opacity: .7; }
+.pilula-icone { display: grid; place-items: center; flex: none; width: 34px; height: 34px; border-radius: 50%; background: var(--pilula-texto); color: var(--pilula-cheia); font-size: 15px; }
+
+/* linha de dado: rótulo à esquerda, valor à direita, linha fina embaixo */
+.linhas { margin: 0; padding: 0; }
+.linha-dado { display: flex; justify-content: space-between; gap: var(--e-3); padding: var(--e-3) 0; border-bottom: 1px solid var(--linha); }
+.linha-dado dt { color: var(--suave); }
+.linha-dado dd { margin: 0; text-align: right; font-variant-numeric: tabular-nums; }
+
+/* seletor de tamanho: o select nativo com linha embaixo */
+.seletor { position: relative; display: block; border-bottom: 1px solid var(--linha); }
+.seletor select { appearance: none; width: 100%; border: 0; background: transparent; padding: var(--e-3) 28px var(--e-3) 0; font-size: var(--t-3); letter-spacing: -.02em; cursor: pointer; }
+.seletor select option { background: var(--fundo); color: var(--texto); }
+.seletor::after { content: "⌄"; position: absolute; right: 4px; top: 50%; transform: translateY(-62%); color: var(--suave); pointer-events: none; }
+.seletor:focus-within { border-bottom-color: var(--destaque); }
+
+/* etiqueta holográfica do nicho (nome e número em âmbar) */
+.etiqueta { font: 400 var(--t-1)/1.2 var(--fonte); letter-spacing: var(--ls-rotulo); text-transform: uppercase; color: var(--rotulo); }
+.etiqueta span { display: block; margin-top: 3px; font-size: 8px; letter-spacing: .2em; opacity: .8; }
+
+/* aviso (toast) */
+.aviso { position: fixed; z-index: 8; left: 50%; bottom: calc(56px + env(safe-area-inset-bottom, 0px)); max-width: calc(100% - 32px); transform: translate(-50%, 12px);
+  padding: 10px 18px; border-radius: var(--r-pilula); background: var(--pilula-cheia); color: var(--pilula-texto); font-size: var(--t-2);
+  opacity: 0; pointer-events: none; transition: opacity var(--rapido), transform var(--rapido) var(--curva); }
+.aviso.mostra { opacity: 1; transform: translate(-50%, 0); }
+.pulo { animation: pulo .5s var(--curva); }
+@keyframes pulo { 40% { color: var(--destaque); transform: translateY(-2px); } }
+
+/* ── 5. Fundos e efeitos ───────────────────────────────────────────────── */
+/* parede: luz de cima + vinheta; o reboco é um ruído SVG que anda junto com a câmera */
+.palco { position: relative; overflow: hidden; background: radial-gradient(120% 85% at 50% 0%, var(--parede-luz), var(--parede) 55%, var(--fundo) 100%); }
+.palco::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse at 50% 45%, transparent 50%, var(--vinheta)); }
+.reboco { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .28 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+
+/* nicho: facho de luz, reflexo, prateleira de acrílico com LED, tênis e etiqueta.
+   As medidas internas são em % do nicho; o tamanho do nicho vem de quem o usa. */
+.nicho { position: absolute; border: 0; padding: 0; background: none; cursor: pointer; }
+.nicho:focus-visible { outline: 2px solid var(--destaque); outline-offset: -10px; border-radius: 14px; }
+.nicho .facho { position: absolute; left: 0; right: 0; top: 6%; height: 62%; opacity: 0; transition: opacity var(--medio);
+  background: radial-gradient(ellipse 46% 62% at 50% 100%, rgba(255, 190, 130, .22), transparent 70%); }
+.nicho .tenis { position: absolute; left: 10%; width: 80%; bottom: 32%; transform: translateY(6.7%); filter: brightness(var(--tenis-apagado)) saturate(.75);
+  transition: filter var(--medio), transform .6s var(--curva); }
+.tenis svg { display: block; width: 100%; height: auto; }
+.nicho .prateleira { position: absolute; top: 68%; left: 13%; width: 74%; height: 12px; background: var(--acrilico); border-top: 1px solid var(--acrilico-topo);
+  box-shadow: 0 16px 18px -8px var(--sombra-chao); }
+.nicho .led { position: absolute; left: 3%; right: 3%; bottom: -2px; height: 3px; border-radius: 3px; background: var(--led); opacity: .16; transition: opacity .4s, box-shadow .4s; }
+.nicho .reflexo { position: absolute; left: 0; right: 0; top: calc(68% + 12px); height: 28%; opacity: 0; transition: opacity var(--medio);
+  background: radial-gradient(ellipse 50% 70% at 50% 0, var(--led-halo), transparent 70%); }
+.nicho .etiqueta { position: absolute; left: 0; right: 0; top: calc(68% + 28px); text-align: center; opacity: 0; transition: opacity .4s; }
+/* aceso: hover, foco ou escolhido */
+.nicho:hover .tenis, .nicho:focus-visible .tenis, .nicho.aceso .tenis { filter: brightness(1.04) saturate(1.05); transform: translateY(4%); }
+.nicho:hover .led, .nicho:focus-visible .led, .nicho.aceso .led { opacity: 1; box-shadow: 0 0 10px 2px var(--led-quente), 0 0 34px 8px var(--led-halo); animation: acende .45s steps(1) 1; }
+.nicho:hover :is(.facho, .reflexo), .nicho:focus-visible :is(.facho, .reflexo), .nicho.aceso :is(.facho, .reflexo) { opacity: 1; }
+.nicho:hover .etiqueta, .nicho:focus-visible .etiqueta { opacity: 1; }
+/* o LED pisca duas vezes ao acender, como lâmpada fluorescente */
+@keyframes acende { 0% { opacity: .16; } 15% { opacity: 1; } 30% { opacity: .3; } 45% { opacity: 1; } }
+
+/* ── 6. A câmera ───────────────────────────────────────────────────────── */
+/* Uma parede só; aproximar é transform: translate(x, y) scale(s) na parede (origem 0 0).
+   O vizinho aparece na borda porque é a mesma parede, como na referência. */
+.parede { position: absolute; left: 0; top: 0; transform-origin: 0 0; transition: transform var(--camera) var(--curva); }
+.instantaneo .parede, .instantaneo .painel { transition: none !important; }
+.perto .nicho:not(.aceso) .tenis { filter: brightness(var(--tenis-fora)) saturate(.6); }
+.perto .nicho .etiqueta { opacity: 0; }
+
+/* ── 7. Moldura da loja: barra, abertura, painel e rodapé ──────────────── */
+.loja { height: 100%; overflow: hidden; }
+.loja .palco { position: fixed; inset: 0; }
+.barra, .rodape { position: fixed; z-index: 5; left: 0; right: 0; display: flex; align-items: center; justify-content: space-between; gap: var(--e-4);
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.barra { top: 0; padding-block: calc(var(--e-3) + env(safe-area-inset-top, 0px)) var(--e-3); }
+.rodape { bottom: 0; padding-block: var(--e-3) calc(var(--e-3) + env(safe-area-inset-bottom, 0px)); font-size: var(--t-0); color: var(--suave); }
+.rodape .rotulo { color: var(--suave); }
+.abertura { position: fixed; z-index: 4; top: calc(64px + env(safe-area-inset-top, 0px)); left: max(16px, env(safe-area-inset-left, 0px)); display: grid; gap: var(--e-2);
+  pointer-events: none; transition: opacity var(--medio), transform var(--medio) var(--curva); animation: entra .9s var(--curva) both; }
+@keyframes entra { from { opacity: 0; transform: translateY(14px); } }
+.perto .abertura { opacity: 0; transform: translateY(-10px); }
+
+/* painel do produto: sem cartão, texto direto sobre a parede, numa coluna à direita */
+.painel { position: fixed; z-index: 6; top: 0; bottom: 0; right: 0; width: min(380px, 36vw); overflow: auto; display: flex; flex-direction: column; gap: var(--e-4);
+  padding: calc(76px + env(safe-area-inset-top, 0px)) calc(var(--e-5) + env(safe-area-inset-right, 0px)) calc(56px + env(safe-area-inset-bottom, 0px)) var(--e-5);
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--fundo) 78%, transparent) 26%); transform: translateX(105%); transition: transform .8s var(--curva); }
+.perto .painel { transform: none; }
+.painel-topo { display: flex; justify-content: space-between; align-items: flex-start; gap: var(--e-3); }
+.painel-nav { display: flex; justify-content: space-between; gap: var(--e-3); margin-top: auto; }
+
+@media (min-width: 720px) {
+  .barra, .rodape { padding-left: max(var(--e-5), env(safe-area-inset-left, 0px)); padding-right: max(var(--e-5), env(safe-area-inset-right, 0px)); }
+  .abertura { left: max(var(--e-5), env(safe-area-inset-left, 0px)); }
+}
+@media (max-width: 719px) {
+  .marca { font-size: 22px; }
+  .nav .so-largo, .rodape .so-largo { display: none; }
+  .painel { top: auto; left: 0; width: auto; max-height: 58%; gap: var(--e-3); border-top: 1px solid var(--linha); border-radius: 18px 18px 0 0;
+    padding: var(--e-4) max(16px, env(safe-area-inset-right, 0px)) calc(var(--e-4) + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px));
+    background: color-mix(in srgb, var(--fundo) 92%, transparent); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); transform: translateY(105%); }
+  .perto .rodape { opacity: 0; }
+}
+
+.sem-js-aviso { position: absolute; left: 16px; right: 16px; top: 50%; margin: 0; text-align: center; color: var(--suave); }
+
+/* ── 8. A página do design system ──────────────────────────────────────── */
+.ds { max-width: 1040px; margin: 0 auto; padding-block: var(--e-6); padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.ds-topo { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: var(--e-4); padding-bottom: var(--e-5); border-bottom: 1px solid var(--linha); }
+.ds-topo p { max-width: 62ch; margin: var(--e-3) 0 0; }
+.ds-indice { position: sticky; top: 0; z-index: 5; display: flex; gap: var(--e-4); overflow-x: auto; scrollbar-width: none; padding-block: var(--e-3);
+  border-bottom: 1px solid var(--linha); background: color-mix(in srgb, var(--fundo) 88%, transparent); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+.ds-indice a { white-space: nowrap; }
+.secao { padding-block: var(--e-6) 0; scroll-margin-top: 52px; }
+.secao > h2 { margin: 0 0 var(--e-2); font: 650 22px/1.1 var(--display); letter-spacing: -.03em; }
+.secao > p { max-width: 68ch; margin: 0 0 var(--e-4); color: var(--suave); }
+.ds-grade { display: grid; gap: var(--e-4); grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); }
+.ds-item { display: grid; gap: var(--e-3); align-content: start; min-width: 0; }
+.ds-item h3 { margin: 0; font: 500 var(--t-2) var(--fonte); }
+.ds-demo { position: relative; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: var(--e-4); min-height: 120px; padding: var(--e-4);
+  border: 1px dashed var(--linha); border-radius: var(--r-2); overflow: hidden; }
+.ds-demo.coluna { flex-direction: column; align-items: stretch; justify-content: flex-start; }
+.ds-codigo { position: relative; margin: 0; }
+.ds-codigo pre { margin: 0; padding: var(--e-3) 84px var(--e-3) var(--e-3); overflow-x: auto; border-radius: var(--r-2); background: var(--chip); border: 1px solid var(--linha);
+  font: 400 12px/1.55 ui-monospace, Consolas, monospace; white-space: pre-wrap; overflow-wrap: anywhere; }
+.copiar { position: absolute; top: 6px; right: 6px; border: 1px solid var(--linha); border-radius: var(--r-1); background: var(--fundo); padding: 4px 10px; font-size: var(--t-1); cursor: pointer; }
+.amostras { display: grid; gap: var(--e-3); grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+.amostra { display: grid; gap: var(--e-2); font-size: var(--t-1); color: var(--suave); }
+.amostra i { display: block; height: 56px; border-radius: var(--r-2); border: 1px solid var(--linha); background: var(--c); }
+.amostra code { color: var(--texto); }
+.escala { display: grid; gap: var(--e-3); }
+.escala div { display: flex; align-items: baseline; gap: var(--e-4); border-bottom: 1px solid var(--linha); padding-bottom: var(--e-3); min-width: 0; }
+.escala code { flex: none; width: 92px; font-size: var(--t-1); color: var(--suave); }
+.regua { display: flex; align-items: center; gap: var(--e-3); font-size: var(--t-1); color: var(--suave); }
+.regua i { display: block; height: 10px; background: var(--destaque); border-radius: 2px; }
+.ds-nicho { position: relative; width: min(100%, 320px); aspect-ratio: 320 / 430; }
+.ds-nicho .nicho { inset: 0; width: 100%; height: 100%; }
+.ds-tenis { display: grid; gap: var(--e-4); grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); }
+.ds-tenis figure { margin: 0; display: grid; gap: var(--e-2); }
+.ds-tenis figcaption { font-size: var(--t-1); color: var(--suave); }
+.ds-camera { position: relative; height: 340px; border-radius: var(--r-2); }
+.ds-controles { display: flex; flex-wrap: wrap; gap: var(--e-2); }
+.ds-controles .botao-texto { padding: var(--e-1) var(--e-3); border: 1px solid var(--linha); border-radius: var(--r-pilula); color: var(--texto); }
+.ds-controles .botao-texto[aria-pressed="true"] { background: var(--texto); color: var(--fundo); }
+.ds-painel { width: min(100%, 360px); display: grid; gap: var(--e-4); }
+.ds-aviso { position: static; transform: none; opacity: 1; }
+.ds-tema { display: flex; gap: var(--e-2); }
+
+/* ── 9. Movimento reduzido ─────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition-duration: .01s !important; }
+}
